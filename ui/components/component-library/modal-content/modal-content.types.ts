@@ -1,6 +1,8 @@
 import React from 'react';
-import type { BoxProps, BoxWidth, BoxWidthArray } from '../../ui/box/box.d';
-import { Size } from '../../../helpers/constants/design-system';
+import type {
+  PolymorphicComponentPropWithRef,
+  StyleUtilityProps,
+} from '../box';
 
 /*
  * ModalContent sizes
@@ -9,10 +11,17 @@ import { Size } from '../../../helpers/constants/design-system';
  * Not to say there won't be more in the future, but to prevent redundant code there is only one for now
  */
 export enum ModalContentSize {
-  Sm = Size.SM,
+  // 360px
+  Sm = 'sm',
+  // 480px
+  Md = 'md',
+  // 720px
+  Lg = 'lg',
 }
 
-export interface ModalContentProps extends BoxProps {
+// TODO: Convert to a `type` in a future major version.
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+export interface ModalContentStyleUtilityProps extends StyleUtilityProps {
   /**
    * The additional className of the ModalContent component
    */
@@ -20,21 +29,28 @@ export interface ModalContentProps extends BoxProps {
   /**
    * The content of the ModalContent component
    */
-  children?: React.ReactNode;
+  children: React.ReactNode;
   /**
-   * The size of ModalContent
-   * Currently only one size is supported ModalContentSize.Sm 360px
-   * See docs for more info
+   * Use the size prop and ModalContentSize enum to change the max-width of the ModalContent
+   *
+   * ModalContentSize.Sm = 360px
+   * ModalContentSize.Md = 480px
+   * ModalContentSize.Lg = 720px
+   *
+   * @default ModalContentSize.Sm
    */
   size?: ModalContentSize;
   /**
-   * To override the default width of the ModalContent component
-   * Accepts all BLOCK_SIZES from design-system
+   * Additional props to pass to the dialog node inside of ModalContent component
    */
-  width?: BoxWidth | BoxWidthArray;
-  /**
-   * The ref of the ModalContent component
-   * Used with Modal and closeOnOutsideClick prop
-   */
-  modalContentRef?: React.RefObject<HTMLElement>;
+  // TODO: Replace `any` with type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  modalDialogProps?: any;
 }
+
+export type ModalContentProps<C extends React.ElementType> =
+  PolymorphicComponentPropWithRef<C, ModalContentStyleUtilityProps>;
+
+export type ModalContentComponent = <C extends React.ElementType = 'div'>(
+  props: ModalContentProps<C>,
+) => React.ReactElement | null;

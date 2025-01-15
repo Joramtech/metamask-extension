@@ -1,22 +1,8 @@
 {
-  "content_security_policy": "frame-ancestors 'none'; script-src 'self'; object-src 'self'",
+  "content_security_policy": "frame-ancestors 'none'; script-src 'self' 'wasm-unsafe-eval'; object-src 'none'",
   "externally_connectable": {
     "matches": ["https://metamask.io/*"],
     "ids": ["*"]
   },
-  "minimum_chrome_version": "80",
-  "permissions": [
-    "storage",
-    "unlimitedStorage",
-    "clipboardWrite",
-    "http://localhost:8545/",
-    "https://*.infura.io/",
-    "https://*.codefi.network/",
-    "https://chainid.network/chains.json",
-    "https://lattice.gridplus.io/*",
-    "activeTab",
-    "webRequest",
-    "*://*.eth/",
-    "notifications"
-  ]
+  "minimum_chrome_version": "89"
 }

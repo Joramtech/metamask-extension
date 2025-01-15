@@ -1,12 +1,56 @@
 .multichain-account-list-item {
   position: relative;
   width: 100%;
+  justify-items: center;
 
-  &:not(.account-list-item--selected) {
+  &--clickable {
+    cursor: pointer;
+  }
+
+  &:not(.multichain-account-list-item--clickable) {
+    cursor: default;
+
+    .multichain-account-list-item__account-name__button,
+    .multichain-badge-status {
+      cursor: default;
+    }
+  }
+
+  &:not(.multichain-account-list-item--selected) {
     &:hover,
     &:focus-within {
       background: var(--color-background-default-hover);
     }
+  }
+
+  &__account-name {
+    max-width: 160px;
+    min-width: 80px;
+
+    /* Prevent the normal hover effect on Buttons */
+    &__button {
+      &:hover,
+      &:focus {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__asset {
+    max-width: 130px;
+    min-width: 60px;
+    align-self: self-end;
+  }
+
+  /* Prevent font-size resizing to avoid conflcits for long asset and token names */
+  &__account-name button,
+  &__asset,
+  &__tooltip {
+    font-size: 14px !important;
+  }
+
+  &__avatar {
+    margin-inline-end: 2px;
   }
 
   &__selected-indicator {
@@ -22,11 +66,29 @@
     flex: 1;
   }
 
-  .currency-display-component {
-    flex-wrap: nowrap;
-  }
-
   &__tooltip {
     display: inline;
+  }
+
+  .currency-display-component {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline;
+
+    &__prefix {
+      padding-right: unset;
+    }
+
+    &__suffix {
+      font-size: 12px !important;
+    }
+  }
+
+  .custody-logo {
+    height: 32px;
+    padding: 4px;
+    margin-right: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
   }
 }

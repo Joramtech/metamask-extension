@@ -9,7 +9,6 @@ import {
   BackgroundColor,
   DISPLAY,
   IconColor,
-  Size,
 } from '../../../helpers/constants/design-system';
 
 import Box from '../../ui/box/box';
@@ -17,9 +16,11 @@ import Box from '../../ui/box/box';
 import {
   AvatarAccount,
   AvatarNetwork,
+  AvatarNetworkSize,
   AvatarToken,
   Icon,
-  ICON_NAMES,
+  IconName,
+  IconSize,
   Tag,
 } from '..';
 import {
@@ -67,9 +68,9 @@ const Template: ComponentStory<typeof BadgeWrapper> = (args) => (
   <BadgeWrapper
     badge={
       <AvatarNetwork
-        size={Size.XS}
+        size={AvatarNetworkSize.Xs}
         name="Avalanche"
-        src="./images/avax-token.png"
+        src="./images/avax-token.svg"
         borderColor={BorderColor.borderMuted}
       />
     }
@@ -87,14 +88,14 @@ export const DefaultStory = Template.bind({});
 
 DefaultStory.storyName = 'Default';
 
-export const Children = () => (
+export const Children: ComponentStory<typeof BadgeWrapper> = () => (
   <Box display={DISPLAY.FLEX} gap={4}>
     <BadgeWrapper
       badge={
         <AvatarNetwork
-          size={Size.XS}
+          size={AvatarNetworkSize.Xs}
           name="Avalanche"
-          src="./images/avax-token.png"
+          src="./images/avax-token.svg"
           borderColor={BorderColor.borderMuted}
         />
       }
@@ -104,9 +105,9 @@ export const Children = () => (
     <BadgeWrapper
       badge={
         <AvatarNetwork
-          size={Size.XS}
+          size={AvatarNetworkSize.Xs}
           name="Avalanche"
-          src="./images/avax-token.png"
+          src="./images/avax-token.svg"
           borderColor={BorderColor.borderMuted}
         />
       }
@@ -120,9 +121,9 @@ export const Children = () => (
     <BadgeWrapper
       badge={
         <AvatarNetwork
-          size={Size.SM}
+          size={AvatarNetworkSize.Sm}
           name="Avalanche"
-          src="./images/avax-token.png"
+          src="./images/avax-token.svg"
           borderColor={BorderColor.borderMuted}
         />
       }
@@ -139,14 +140,14 @@ export const Children = () => (
   </Box>
 );
 
-export const Badge = () => (
+export const Badge: ComponentStory<typeof BadgeWrapper> = () => (
   <Box display={DISPLAY.FLEX} gap={4}>
     <BadgeWrapper
       badge={
         <AvatarNetwork
-          size={Size.XS}
+          size={AvatarNetworkSize.Xs}
           name="Avalanche"
-          src="./images/avax-token.png"
+          src="./images/avax-token.svg"
           borderColor={BorderColor.borderMuted}
         />
       }
@@ -165,8 +166,8 @@ export const Badge = () => (
       }
     >
       <Icon
-        name={ICON_NAMES.GLOBAL}
-        size={Size.XL}
+        name={IconName.Global}
+        size={IconSize.Xl}
         color={IconColor.iconAlternative}
       />
     </BadgeWrapper>
@@ -206,15 +207,15 @@ export const Badge = () => (
   </Box>
 );
 
-export const Position = () => (
+export const Position: ComponentStory<typeof BadgeWrapper> = () => (
   <Box display={DISPLAY.FLEX} gap={4}>
     <BadgeWrapper
       position={BadgeWrapperPosition.topLeft}
       badge={
         <AvatarNetwork
-          size={Size.XS}
+          size={AvatarNetworkSize.Xs}
           name="Avalanche"
-          src="./images/avax-token.png"
+          src="./images/avax-token.svg"
           borderColor={BorderColor.borderMuted}
         />
       }
@@ -224,9 +225,9 @@ export const Position = () => (
     <BadgeWrapper
       badge={
         <AvatarNetwork
-          size={Size.XS}
+          size={AvatarNetworkSize.Xs}
           name="Avalanche"
-          src="./images/avax-token.png"
+          src="./images/avax-token.svg"
           borderColor={BorderColor.borderMuted}
         />
       }
@@ -237,9 +238,9 @@ export const Position = () => (
       position={BadgeWrapperPosition.bottomLeft}
       badge={
         <AvatarNetwork
-          size={Size.XS}
+          size={AvatarNetworkSize.Xs}
           name="Avalanche"
-          src="./images/avax-token.png"
+          src="./images/avax-token.svg"
           borderColor={BorderColor.borderMuted}
         />
       }
@@ -250,9 +251,9 @@ export const Position = () => (
       position={BadgeWrapperPosition.bottomRight}
       badge={
         <AvatarNetwork
-          size={Size.XS}
+          size={AvatarNetworkSize.Xs}
           name="Avalanche"
-          src="./images/avax-token.png"
+          src="./images/avax-token.svg"
           borderColor={BorderColor.borderMuted}
         />
       }
@@ -262,14 +263,14 @@ export const Position = () => (
   </Box>
 );
 
-export const PositionObj = () => (
+export const PositionObj: ComponentStory<typeof BadgeWrapper> = () => (
   <Box display={DISPLAY.FLEX} alignItems={AlignItems.baseline} gap={4}>
     <BadgeWrapper
       badge={
         <AvatarNetwork
-          size={Size.XS}
+          size={AvatarNetworkSize.Xs}
           name="Avalanche"
-          src="./images/avax-token.png"
+          src="./images/avax-token.svg"
           borderColor={BorderColor.borderMuted}
         />
       }
@@ -280,7 +281,7 @@ export const PositionObj = () => (
   </Box>
 );
 
-export const AnchorElementShape = () => (
+export const AnchorElementShape: ComponentStory<typeof BadgeWrapper> = () => (
   <Box display={DISPLAY.FLEX} gap={4}>
     <BadgeWrapper
       badge={

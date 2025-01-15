@@ -1,18 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import React, { useState } from 'react';
+import { StoryFn, Meta } from '@storybook/react';
+
+import { Display, FlexWrap } from '../../../helpers/constants/design-system';
 
 import {
-  DISPLAY,
-  JustifyContent,
-  AlignItems,
-  BLOCK_SIZES,
-  TextVariant,
-  TEXT_ALIGN,
-} from '../../../helpers/constants/design-system';
-
-import Box from '../../ui/box';
-
-import { Button, Text } from '..';
+  Box,
+  ButtonVariant,
+  Button,
+  Text,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from '..';
 
 import { ModalContent } from './modal-content';
 import { ModalContentSize } from './modal-content.types';
@@ -28,116 +28,163 @@ export default {
     },
   },
   argTypes: {
-    className: {
-      control: 'text',
-    },
-    children: {
-      control: 'text',
-    },
+    children: { control: 'text' },
     size: {
       control: 'select',
-      options: Object.values(ModalContentSize).map((value) =>
-        value.toLowerCase(),
-      ),
+      options: Object.values(ModalContentSize),
     },
+    modalDialogProps: { control: 'object' },
   },
-  args: {
-    children: 'Modal Content',
-  },
-} as ComponentMeta<typeof ModalContent>;
+} as Meta<typeof ModalContent>;
 
-const Template: ComponentStory<typeof ModalContent> = (args) => (
-  <ModalContent {...args} />
+const LoremIpsum = () => (
+  <Text marginBottom={4}>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod
+    tortor vitae nisi blandit, eu aliquam nisl ultricies. Donec euismod
+    scelerisque nisl, sit amet aliquet nunc. Donec euismod, nisl vitae
+    consectetur aliquam, nunc nunc ultricies nunc, eget aliquam nisl nisl vitae
+    nunc. Donec euismod, nisl vitae consectetur aliquam, nunc nunc ultricies
+    nunc, eget aliquam nisl nisl vitae nunc. Donec euismod, nisl vitae
+    consectetur aliquam, nunc nunc ultricies nunc, eget aliquam nisl nisl vitae
+    nunc. Donec euismod, nisl vitae consectetur aliquam, nunc
+  </Text>
 );
 
-export const DefaultStory = Template.bind({});
-DefaultStory.storyName = 'Default';
-
-/*
- * !!TODO: Replace with ModalHeader component
- */
-const ModalHeader = () => (
-  <>
-    <Box
-      className="mm-modal-header"
-      display={DISPLAY.FLEX}
-      justifyContent={JustifyContent.spaceBetween}
-      alignItems={AlignItems.flexStart}
-      width={BLOCK_SIZES.FULL}
-      marginBottom={4}
-    >
-      <button>Back</button>
-      <Text variant={TextVariant.headingSm} textAlign={TEXT_ALIGN.CENTER}>
-        Modal Header
-      </Text>
-      <button>Close</button>
-    </Box>
-  </>
-);
-
-export const Children: ComponentStory<typeof ModalContent> = (args) => (
-  <ModalContent {...args}>
-    <ModalHeader />
-    <Text>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio,
-      reiciendis assumenda dolorum mollitia saepe, optio at aliquam molestias
-      omnis quae corporis nesciunt natus, quas tempore ut ullam eaque fuga.
-      Velit.
-    </Text>
-  </ModalContent>
-);
-
-export const Size: ComponentStory<typeof ModalContent> = (args) => (
-  <>
-    <ModalContent {...args} marginBottom={4}>
-      <Text>ModalContentSize.Sm default and only size 360px max-width</Text>
-    </ModalContent>
-    <ModalContent
-      {...args}
-      width={[
-        BLOCK_SIZES.FULL,
-        BLOCK_SIZES.THREE_FOURTHS,
-        BLOCK_SIZES.HALF,
-        BLOCK_SIZES.ONE_THIRD,
-      ]}
-      marginBottom={4}
-    >
-      <Text>
-        Using width Box props and responsive array props <br /> [
-        BLOCK_SIZES.FULL, BLOCK_SIZES.THREE_FOURTHS, BLOCK_SIZES.HALF,
-        BLOCK_SIZES.ONE_THIRD, ]
-      </Text>
-    </ModalContent>
-    <ModalContent {...args} marginBottom={4} style={{ maxWidth: 800 }}>
-      Adding a className and setting a max width (max-width: 800px)
-    </ModalContent>
-  </>
-);
-
-export const ModalContentRef: ComponentStory<typeof ModalContent> = (args) => {
+export const DefaultStory: StoryFn<typeof ModalContent> = (args) => {
   const [show, setShow] = useState(false);
-  const modalContentRef = useRef<HTMLDivElement>(null);
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      modalContentRef?.current &&
-      !modalContentRef.current.contains(event.target as Node)
-    ) {
-      setShow(false);
-    }
+  const handleOnClick = () => {
+    setShow(!show);
   };
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
   return (
     <>
-      <Button onClick={() => setShow(true)}>Show ModalContent</Button>
-      {show && (
-        <ModalContent {...args} modalContentRef={modalContentRef}>
-          Click outside of this ModalContent to close
+      <Button variant={ButtonVariant.Primary} onClick={handleOnClick}>
+        Open
+      </Button>
+      <Modal isOpen={show} onClose={handleOnClick}>
+        <ModalContent {...args}>
+          <ModalHeader>Modal Header</ModalHeader>
+          <ModalBody>
+            <Text>Modal Content</Text>
+          </ModalBody>
+          <ModalFooter
+            onSubmit={handleOnClick}
+            submitButtonProps={{ children: 'Close' }}
+          />
         </ModalContent>
+      </Modal>
+    </>
+  );
+};
+
+DefaultStory.storyName = 'Default';
+
+export const Children: StoryFn<typeof ModalContent> = (args) => {
+  const [show, setShow] = useState(false);
+  const handleOnClick = () => {
+    setShow(!show);
+  };
+  return (
+    <>
+      <Button variant={ButtonVariant.Primary} onClick={handleOnClick}>
+        Open
+      </Button>
+      <Modal isOpen={show} onClose={handleOnClick}>
+        <ModalContent {...args}>
+          <ModalHeader marginBottom={4}>Modal Header</ModalHeader>
+          <ModalBody>
+            <Text marginBottom={4}>
+              The ModalContent with ModalHeader, ModalBody, ModalFooter as
+              children
+            </Text>
+            <LoremIpsum />
+            <LoremIpsum />
+            <LoremIpsum />
+            <LoremIpsum />
+            <LoremIpsum />
+          </ModalBody>
+          <ModalFooter
+            onSubmit={handleOnClick}
+            submitButtonProps={{ children: 'Close' }}
+          />
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
+
+enum ModalContentSizeStoryOption {
+  Sm = 'sm',
+  Md = 'md',
+  Lg = 'lg',
+  ClassName = 'className',
+}
+
+export const Size: StoryFn<typeof ModalContent> = (args) => {
+  const [currentSize, setCurrentSize] =
+    useState<ModalContentSizeStoryOption | null>(null);
+
+  const handleOnClick = (size: ModalContentSizeStoryOption) => {
+    setCurrentSize(currentSize === size ? null : size);
+  };
+
+  const getSize = (size: ModalContentSizeStoryOption) => {
+    switch (size) {
+      case ModalContentSizeStoryOption.Sm:
+        return ModalContentSize.Sm;
+      case ModalContentSizeStoryOption.Md:
+        return ModalContentSize.Md;
+      case ModalContentSizeStoryOption.Lg:
+        return ModalContentSize.Lg;
+      default:
+        return ModalContentSize.Sm;
+    }
+  };
+
+  return (
+    <>
+      <Box display={Display.Flex} flexWrap={FlexWrap.Wrap} gap={4}>
+        {Object.values(ModalContentSizeStoryOption).map((size) => (
+          <Button
+            key={size}
+            variant={ButtonVariant.Secondary}
+            onClick={() => handleOnClick(size)}
+          >
+            {`Show ${size} size`}
+          </Button>
+        ))}
+      </Box>
+      {currentSize && (
+        <Modal isOpen={true} onClose={() => setCurrentSize(null)}>
+          <ModalContent
+            {...args}
+            size={getSize(currentSize)}
+            modalDialogProps={
+              currentSize === ModalContentSizeStoryOption.ClassName
+                ? { className: 'max-width-800' }
+                : {}
+            }
+          >
+            <ModalHeader marginBottom={4} onClose={() => setCurrentSize(null)}>
+              {`ModalContent size: ${currentSize}`}
+            </ModalHeader>
+            <ModalBody>
+              <Text marginBottom={4}>
+                {currentSize === ModalContentSizeStoryOption.ClassName ? (
+                  <>
+                    This ModalContent has size set using modalDialogProps and
+                    adding a className setting a max width (max-width: 800px){' '}
+                  </>
+                ) : (
+                  <>This ModalContent is using size: {currentSize}</>
+                )}
+              </Text>
+            </ModalBody>
+            <ModalFooter
+              onSubmit={() => setCurrentSize(null)}
+              submitButtonProps={{ children: 'Close' }}
+            />
+          </ModalContent>
+        </Modal>
       )}
     </>
   );

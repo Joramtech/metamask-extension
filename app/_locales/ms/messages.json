@@ -75,9 +75,6 @@
   "asset": {
     "message": "Aset"
   },
-  "attemptingConnect": {
-    "message": "Sedang cuba menyambungkan kepada rantaian blok."
-  },
   "attributions": {
     "message": "Atribusi"
   },
@@ -92,9 +89,6 @@
   },
   "back": {
     "message": "Kembali"
-  },
-  "backToAll": {
-    "message": "Kembali kepada Semua"
   },
   "backupApprovalInfo": {
     "message": "Kod rahsia ini diperlukan untuk memulihkan dompet anda sekiranya anda kehilangan peranti anda, terlupa kata laluan anda, perlu memasang semua MetaMask, atau mahu mengakses dompet anda menggunakan peranti lain."
@@ -154,16 +148,13 @@
   "connect": {
     "message": "Sambung"
   },
-  "connectHardwareWallet": {
-    "message": "Sambungkan Dompet Perkakasan"
-  },
   "connectingTo": {
     "message": "Menyambungkan kepada $1"
   },
   "connectingToGoerli": {
     "message": "Menyambung kepada Rangkaian Ujian Goerli"
   },
-  "connectingToLineaTestnet": {
+  "connectingToLineaGoerli": {
     "message": "Menyambung kepada Rangkaian Ujian Linea Goerli"
   },
   "connectingToMainnet": {
@@ -181,9 +172,6 @@
   "copyAddress": {
     "message": "Salin alamat kepada papan klip"
   },
-  "copyPrivateKey": {
-    "message": "Ini kunci persendirian anda (klik untuk menyalin)"
-  },
   "copyToClipboard": {
     "message": "Salin ke papan keratan"
   },
@@ -192,9 +180,6 @@
   },
   "create": {
     "message": "Cipta"
-  },
-  "createAccount": {
-    "message": "Cipta Akaun"
   },
   "createPassword": {
     "message": "Cipta Kata Laluan"
@@ -220,15 +205,6 @@
   "delete": {
     "message": "Padam"
   },
-  "deleteAccount": {
-    "message": "Hapus Akaun"
-  },
-  "deleteNetwork": {
-    "message": "Padamkan Rangkaian?"
-  },
-  "deleteNetworkDescription": {
-    "message": "Anda pasti anda ingin padamkan rangkaian ini?"
-  },
   "details": {
     "message": "Butiran"
   },
@@ -247,15 +223,6 @@
   "editContact": {
     "message": "Edit Kenalan"
   },
-  "ensNotFoundOnCurrentNetwork": {
-    "message": "Nama ENS tidak ditemui di rangkaian semasa. Cuba beralih kepada Rangkaian Ethereum Utama."
-  },
-  "ensRegistrationError": {
-    "message": "Ralat dalam pendaftaran nama ENS"
-  },
-  "enterPassword": {
-    "message": "Masukkan kata laluan"
-  },
   "enterPasswordContinue": {
     "message": "Masukkan kata laluan untuk teruskan"
   },
@@ -267,9 +234,6 @@
   },
   "expandView": {
     "message": "Kembangkan Paparan"
-  },
-  "exportPrivateKey": {
-    "message": "Eksport Kekunci Persendirian"
   },
   "failed": {
     "message": "Gagal"
@@ -373,12 +337,6 @@
   "invalidAddressRecipient": {
     "message": "Alamat penerima tidak sah"
   },
-  "invalidAddressRecipientNotEthNetwork": {
-    "message": "Bukan rangkaian ETH, tetapkan kepada huruf kecil"
-  },
-  "invalidBlockExplorerURL": {
-    "message": "URL Block Explorer tidak sah"
-  },
   "invalidRPC": {
     "message": "URL RPC tidak sah"
   },
@@ -404,7 +362,7 @@
   "likeToImportTokens": {
     "message": "Adakah anda ingin menambah token ini?"
   },
-  "lineatestnet": {
+  "lineaGoerli": {
     "message": "Rangkaian Ujian Linea Goerli"
   },
   "links": {
@@ -436,9 +394,6 @@
   },
   "mustSelectOne": {
     "message": "Mesti memilih sekurang-kurangnya 1 token."
-  },
-  "myAccounts": {
-    "message": "Akaun Saya"
   },
   "needImportFile": {
     "message": "Anda mesti pilih fail untuk diimport.",
@@ -474,9 +429,6 @@
   },
   "next": {
     "message": "Seterusnya"
-  },
-  "noAddressForName": {
-    "message": "Tiada alamat yang ditetapkan untuk nama ini."
   },
   "noConversionRateAvailable": {
     "message": "Tiada Kadar Penukaran yang Tersedia"
@@ -536,12 +488,6 @@
   "prev": {
     "message": "Sebelumnya"
   },
-  "primaryCurrencySetting": {
-    "message": "Mata Wang Utama"
-  },
-  "primaryCurrencySettingDescription": {
-    "message": "Pilih natif untuk mengutamakan nilai paparan dalam mata wang natif rantaian (cth. ETH). Pilih Fiat untuk mengutamakan nilai paparan dalam mata wang fiat yang anda pilih."
-  },
   "privacyMsg": {
     "message": "Dasar Privasi"
   },
@@ -555,17 +501,8 @@
   "privateNetwork": {
     "message": "Rangkaian Persendirian"
   },
-  "queue": {
-    "message": "Baris Gilir"
-  },
   "readdToken": {
     "message": "Anda boleh tambah token ini kembali pada masa depan dengan pergi ke \"Tambah token\" di dalam menu pilihan akaun anda."
-  },
-  "recents": {
-    "message": "Baru-baru ini"
-  },
-  "recipientAddressPlaceholder": {
-    "message": "Cari, alamat awam (0x), atau ENS"
   },
   "reject": {
     "message": "Tolak"
@@ -625,12 +562,6 @@
   "search": {
     "message": "Carian"
   },
-  "searchResults": {
-    "message": "Hasil Carian"
-  },
-  "searchTokens": {
-    "message": "Cari Token"
-  },
   "securityAndPrivacy": {
     "message": "Keselamatan & Privasi"
   },
@@ -652,17 +583,8 @@
   "send": {
     "message": "Hantar"
   },
-  "sendTokens": {
-    "message": "Hantar Token"
-  },
   "settings": {
     "message": "Tetapan"
-  },
-  "showAdvancedGasInline": {
-    "message": "Kawalan gas lanjutan"
-  },
-  "showAdvancedGasInlineDescription": {
-    "message": "Pilih ini untuk menunjukkan harga gas dan kawalan had terus di skrin hantar dan sahkan."
   },
   "showFiatConversionInTestnets": {
     "message": "Tunjukkan Penukaran di Testnets"
@@ -675,9 +597,6 @@
   },
   "showHexDataDescription": {
     "message": "Pilih ini untuk menunjukkan medan data hex pada skrin hantar"
-  },
-  "showPrivateKeys": {
-    "message": "Tunjukkan Kunci Persendirian"
   },
   "sigRequest": {
     "message": "Permintaan Tandatangan"
@@ -726,27 +645,6 @@
   },
   "symbolBetweenZeroTwelve": {
     "message": "Simbol mestilah 11 aksara atau kurang."
-  },
-  "syncWithMobile": {
-    "message": "Segerakkan dengan telefon mudah alih"
-  },
-  "syncWithMobileBeCareful": {
-    "message": "Pastikan tiada orang lain melihat skrin anda ketika anda mengimbas kod ini"
-  },
-  "syncWithMobileComplete": {
-    "message": "Data anda berjaya disegerakkan. Nikmati aplikasi mudah alih MetaMask!"
-  },
-  "syncWithMobileDesc": {
-    "message": "Anda boleh menyegerakkan akaun dan maklumat anda dengan peranti mudah alih anda. Buka ap mudah alih MetaMask, pergi ke \"Tetapan\" dan ketik \"Segerakkan daripada Sambungan Pelayar\""
-  },
-  "syncWithMobileDescNewUsers": {
-    "message": "Jika ini kali pertama anda membuka aplikasi mudah alih MetaMask, anda cuma perlu ikuti langkah-langkah di telefon anda."
-  },
-  "syncWithMobileScanThisCode": {
-    "message": "Imbas kod ini dengan aplikasi mudah alih MetaMask anda"
-  },
-  "syncWithMobileTitle": {
-    "message": "Segerakkan dengan mudah alih"
   },
   "terms": {
     "message": "Syarat-syarat Penggunaan"
@@ -811,21 +709,11 @@
   "transfer": {
     "message": "Pindah"
   },
-  "transferBetweenAccounts": {
-    "message": "Pindahkan antara akaun saya"
-  },
   "transferFrom": {
     "message": "Pindah Daripada"
   },
-  "troubleTokenBalances": {
-    "message": "Kami menghadapi masalah memuatkan baki token anda. Anda boleh melihatnya",
-    "description": "Followed by a link (here) to view token balances"
-  },
   "tryAgain": {
     "message": "Cuba lagi"
-  },
-  "typePassword": {
-    "message": "Taip kata laluan MetaMask anda"
   },
   "unapproved": {
     "message": "Belum Diluluskan"
@@ -835,12 +723,6 @@
   },
   "unknown": {
     "message": "Tidak diketahui"
-  },
-  "unknownCameraError": {
-    "message": "Terdapat ralat semasa cuba mengakses kamera anda. Sila cuba sekali lagi..."
-  },
-  "unknownCameraErrorTitle": {
-    "message": "Alamak! Ada yang tak kena...."
   },
   "unknownNetwork": {
     "message": "Rangkaian Persendirian Tidak Dikenali"
@@ -853,9 +735,6 @@
   },
   "unlockMessage": {
     "message": "Web ternyahpusat menanti"
-  },
-  "updatedWithDate": {
-    "message": "Dikemaskini $1"
   },
   "urlErrorMsg": {
     "message": "URI memerlukan awalan HTTP/HTTPS yang sesuai."

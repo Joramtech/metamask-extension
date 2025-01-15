@@ -1,5 +1,6 @@
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
+import { TransactionMeta } from '@metamask/transaction-controller';
 import {
   closeCurrentNotificationWindow,
   hideModal,
@@ -9,8 +10,11 @@ import {
   CombinedBackgroundAndReduxState,
   MetaMaskReduxState,
   TemporaryMessageDataType,
+  MessagesIndexedById,
 } from '../store';
 import { toChecksumHexAddress } from '../../../shared/modules/hexstring-utils';
+import { getCurrentNetworkTransactions } from '../../selectors';
+import { CustodyStatus } from '../../../shared/constants/custody';
 
 export function showInteractiveReplacementTokenModal(): ThunkAction<
   void,
@@ -27,12 +31,17 @@ export function showInteractiveReplacementTokenModal(): ThunkAction<
   };
 }
 
-export function showCustodyConfirmLink(
-  link: string,
-  address: string,
-  closeNotification: boolean,
-  custodyId: string,
-): ThunkAction<void, MetaMaskReduxState, unknown, AnyAction> {
+export function showCustodyConfirmLink({
+  link,
+  address,
+  closeNotification,
+  custodyId,
+}: {
+  link: string;
+  address: string;
+  closeNotification: boolean;
+  custodyId: string;
+}): ThunkAction<void, MetaMaskReduxState, unknown, AnyAction> {
   return (dispatch) => {
     dispatch(
       showModal({
@@ -49,15 +58,25 @@ export function showCustodyConfirmLink(
 export function updateCustodyState(
   dispatch: ThunkDispatch<CombinedBackgroundAndReduxState, unknown, AnyAction>,
   newState: MetaMaskReduxState['metamask'],
+  // TODO: Replace `any` with type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   state: CombinedBackgroundAndReduxState & any,
 ) {
-  if (!newState.currentNetworkTxList || !state.metamask.currentNetworkTxList) {
+  if (!newState.transactions || !state.metamask.transactions) {
     return;
   }
 
-  const differentTxs = newState.currentNetworkTxList.filter(
-    (item) =>
-      state.metamask.currentNetworkTxList.filter(
+  const newCurrentNetworkTxList = getCurrentNetworkTransactions({
+    metamask: newState,
+  });
+
+  const oldCurrentNetworkTxList = getCurrentNetworkTransactions(state);
+
+  const differentTxs = newCurrentNetworkTxList.filter(
+    (item: TransactionMeta) =>
+      oldCurrentNetworkTxList.filter(
+        // TODO: Replace `any` with type
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (tx: { [key: string]: any }) =>
           tx.custodyId === item.custodyId &&
           tx.custodyStatus !== item.custodyStatus,
@@ -65,7 +84,7 @@ export function updateCustodyState(
   );
 
   const txStateSaysDeepLinkShouldClose = Boolean(
-    differentTxs.find((tx) => {
+    differentTxs.find((tx: TransactionMeta) => {
       const custodyAccountDetails =
         state.metamask.custodyAccountDetails[
           toChecksumHexAddress(tx.txParams.from)
@@ -79,9 +98,10 @@ export function updateCustodyState(
 
       return (
         tx.custodyId === state.appState.modal.modalState.props?.custodyId &&
+        tx.custodyStatus &&
         (state.metamask.custodyStatusMaps[custody][tx.custodyStatus]
           ?.mmStatus !== 'approved' ||
-          tx.custodyStatus === 'created')
+          tx.custodyStatus === CustodyStatus.CREATED)
       );
     }),
   );
@@ -108,21 +128,20 @@ export function updateCustodyState(
   }
 }
 
-export function checkForUnapprovedTypedMessages(
-  msgData: TemporaryMessageDataType['msgParams'],
-  newState: MetaMaskReduxState['metamask'],
+export function checkForUnapprovedMessages(
+  msgData: TemporaryMessageDataType,
+  unapprovedMessages: MessagesIndexedById,
 ) {
-  const custodianUnapprovedMessages = Object.keys(
-    newState.unapprovedTypedMessages,
-  )
-    .map((key) => newState.unapprovedTypedMessages[key])
-    .filter((message) => message.custodyId && message.status === 'unapproved');
+  const custodianUnapprovedMessages = Object.keys(unapprovedMessages)
+    .map((key) => unapprovedMessages[key])
+    .filter((message) => {
+      return message.metadata?.custodyId && message.status === 'unapproved';
+    });
 
   if (custodianUnapprovedMessages && custodianUnapprovedMessages.length > 0) {
     return {
       ...msgData,
-      custodyId:
-        newState.unapprovedTypedMessages[msgData.metamaskId]?.custodyId,
+      custodyId: unapprovedMessages[msgData.id]?.metadata?.custodyId,
     };
   }
 

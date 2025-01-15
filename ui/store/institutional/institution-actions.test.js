@@ -1,12 +1,16 @@
 import sinon from 'sinon';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+// TODO: Remove restricted import
+// eslint-disable-next-line import/no-restricted-paths
 import MetaMaskController from '../../../app/scripts/metamask-controller';
-import { _setBackgroundConnection } from '../action-queue';
+import { setBackgroundConnection } from '../background-connection';
+import { mockNetworkState } from '../../../test/stub/networks';
+import { CHAIN_IDS } from '../../../shared/constants/network';
 import {
   showInteractiveReplacementTokenModal,
   showCustodyConfirmLink,
-  checkForUnapprovedTypedMessages,
+  checkForUnapprovedMessages,
   updateCustodyState,
 } from './institution-actions';
 
@@ -14,19 +18,11 @@ const middleware = [thunk];
 const defaultState = {
   metamask: {
     currentLocale: 'test',
-    selectedAddress: '0xFirstAddress',
-    provider: { chainId: '0x1' },
+    ...mockNetworkState({ chainId: CHAIN_IDS.MAINNET }),
+
     accounts: {
       '0xFirstAddress': {
         balance: '0x0',
-      },
-    },
-    identities: {
-      '0xFirstAddress': {},
-    },
-    cachedBalances: {
-      '0x1': {
-        '0xFirstAddress': '0x0',
       },
     },
     custodyStatusMaps: {
@@ -39,10 +35,11 @@ const defaultState = {
         },
       },
     },
-    currentNetworkTxList: [
+    transactions: [
       {
         id: 0,
         time: 0,
+        chainId: '0x1',
         txParams: {
           from: '0xAddress',
           to: '0xRecipient',
@@ -53,6 +50,7 @@ const defaultState = {
       {
         id: 1,
         time: 1,
+        chainId: '0x1',
         txParams: {
           from: '0xAddress',
           to: '0xRecipient',
@@ -107,7 +105,7 @@ describe('#InstitutionActions', () => {
         .callsFake((_, __, cb) => cb(new Error('error'))),
     });
 
-    _setBackgroundConnection(background.getApi());
+    setBackgroundConnection(background.getApi());
 
     const expectedActions = [
       {
@@ -130,7 +128,7 @@ describe('#InstitutionActions', () => {
         .callsFake((_, __, cb) => cb(new Error('error'))),
     });
 
-    _setBackgroundConnection(background.getApi());
+    setBackgroundConnection(background.getApi());
 
     const expectedActions = [
       {
@@ -146,15 +144,20 @@ describe('#InstitutionActions', () => {
     ];
 
     await store.dispatch(
-      showCustodyConfirmLink('link', '0x1', false, 'custodyId'),
+      showCustodyConfirmLink({
+        link: 'link',
+        address: '0x1',
+        closeNotification: false,
+        custodyId: 'custodyId',
+      }),
     );
 
     expect(store.getActions()).toStrictEqual(expectedActions);
   });
 });
 
-describe('#checkForUnapprovedTypedMessages', () => {
-  it('calls checkForUnapprovedTypedMessages and returns the messageData', async () => {
+describe('#checkForUnapprovedMessages', () => {
+  it('calls checkForUnapprovedMessages and returns the messageData', async () => {
     const messageData = {
       id: 1,
       type: 'tx',
@@ -166,11 +169,9 @@ describe('#checkForUnapprovedTypedMessages', () => {
       status: 'unapproved',
     };
 
-    expect(
-      checkForUnapprovedTypedMessages(messageData, {
-        unapprovedTypedMessages: { msg: 'msg' },
-      }),
-    ).toBe(messageData);
+    expect(checkForUnapprovedMessages(messageData, { msg: 'msg' })).toBe(
+      messageData,
+    );
   });
 });
 
@@ -196,17 +197,12 @@ describe('#updateCustodyState', () => {
         .callsFake((_, __, cb) => cb(new Error('error'))),
     });
 
-    _setBackgroundConnection(background.getApi());
+    setBackgroundConnection(background.getApi());
 
     const newState = {
-      provider: {
-        nickname: 'mainnet',
-        chainId: '0x1',
-      },
-      featureFlags: {
-        showIncomingTransactions: false,
-      },
-      selectedAddress: '0xAddress',
+      ...mockNetworkState({ chainId: CHAIN_IDS.MAINNET }),
+
+      featureFlags: {},
     };
 
     const custodyState = updateCustodyState(store.dispatch, newState, newState);
@@ -222,21 +218,17 @@ describe('#updateCustodyState', () => {
         .callsFake((_, __, cb) => cb(new Error('error'))),
     });
 
-    _setBackgroundConnection(background.getApi());
+    setBackgroundConnection(background.getApi());
 
     const newState = {
-      provider: {
-        nickname: 'mainnet',
-        chainId: '0x1',
-      },
-      featureFlags: {
-        showIncomingTransactions: false,
-      },
-      selectedAddress: '0xAddress',
-      currentNetworkTxList: [
+      ...mockNetworkState({ chainId: CHAIN_IDS.MAINNET }),
+
+      featureFlags: {},
+      transactions: [
         {
           id: 0,
           time: 0,
+          chainId: '0x1',
           txParams: {
             from: '0xAddress',
             to: '0xRecipient',
@@ -247,6 +239,7 @@ describe('#updateCustodyState', () => {
         {
           id: 1,
           time: 1,
+          chainId: '0x1',
           txParams: {
             from: '0xAddress',
             to: '0xRecipient',
@@ -277,21 +270,17 @@ describe('#updateCustodyState', () => {
         .callsFake((_, __, cb) => cb(new Error('error'))),
     });
 
-    _setBackgroundConnection(background.getApi());
+    setBackgroundConnection(background.getApi());
 
     const newState = {
-      provider: {
-        nickname: 'mainnet',
-        chainId: '0x1',
-      },
-      featureFlags: {
-        showIncomingTransactions: false,
-      },
-      selectedAddress: '0xAddress',
-      currentNetworkTxList: [
+      ...mockNetworkState({ chainId: CHAIN_IDS.MAINNET }),
+
+      featureFlags: {},
+      transactions: [
         {
           id: 0,
           time: 0,
+          chainId: '0x1',
           txParams: {
             from: '0xAddress',
             to: '0xRecipient',
@@ -302,6 +291,7 @@ describe('#updateCustodyState', () => {
         {
           id: 1,
           time: 1,
+          chainId: '0x1',
           txParams: {
             from: '0xAddress',
             to: '0xRecipient',
